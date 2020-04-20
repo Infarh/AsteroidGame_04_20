@@ -20,7 +20,7 @@ namespace AsteroidGame
             _Size = Size;
         }
 
-        public void Draw(Graphics g)
+        public virtual void Draw(Graphics g)
         {
             g.DrawEllipse(
                 Pens.White,
@@ -29,7 +29,7 @@ namespace AsteroidGame
                 );
         }
 
-        public void Update()
+        public virtual void Update()
         {
             _Position.X += _Direction.X;
             _Position.Y += _Direction.Y;
