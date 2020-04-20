@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace TestConsole
 {
@@ -24,10 +25,17 @@ namespace TestConsole
 
             Vector2D v4 = v3 + 3.14159265358979;
 
-            double pi = double.Parse("3,1415"); //Convert.ToDouble("3,1415");
+            CultureInfo ru = new CultureInfo("ru-ru");
+            CultureInfo en_us = new CultureInfo("en-us");
+            CultureInfo invariant = CultureInfo.InvariantCulture;
+            CultureInfo current = CultureInfo.CurrentCulture;
+            CultureInfo current_ui = CultureInfo.CurrentUICulture;
+
+            double pi = double.Parse("3.1415", invariant); //Convert.ToDouble("3,1415");
             //int j = Convert.ToInt32(3.14);
             int i = (int)pi;
 
+            Console.WriteLine(pi);
             
 
             double length = v4;
