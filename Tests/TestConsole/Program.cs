@@ -10,13 +10,12 @@ namespace TestConsole
             //player1.Name = "Иванов";
             //player1.Birthday = new DateTime(1974, 12, 21, 0, 0, 0);
 
+            Player player1 = new Player("Empty", new DateTime(1987, 12, 12));
+
             Console.Write("Введите фамилию >");
-            var surname = Console.ReadLine();
+            player1.Name = Console.ReadLine();
 
-            Player player1 = new Player(surname, new DateTime(1987, 12, 12));
-
-
-            Console.WriteLine(player1.GetName());
+            Console.WriteLine(player1.Name);
 
             Console.ReadLine();
         }
@@ -37,9 +36,23 @@ namespace TestConsole
             _Name = Name;
         }
 
+        public string Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                _Name = value;
+            }
+        }
+
+        public string Surname { get; set; } = "qwe";
+
         public Player()
         {
-
+            Surname = "123";
         }
 
         public Player(string Name)
