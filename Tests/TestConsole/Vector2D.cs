@@ -54,4 +54,16 @@ namespace TestConsole
             return (int)Math.Round(vector.Length);
         }
     }
+
+    public struct Vector2DStruct
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+
+        public Vector2DStruct(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
 }
