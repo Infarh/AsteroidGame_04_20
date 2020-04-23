@@ -16,7 +16,7 @@ namespace AsteroidGame.VisualObjects
         {
             get
             {
-                return new Rectangle(_Direction, _Size);
+                return new Rectangle(_Position, _Size);
             }
         }
 
