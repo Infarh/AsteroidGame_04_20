@@ -8,8 +8,12 @@ namespace TestConsole.Loggers
 {
     internal abstract class Logger
     {
-        public abstract void Log(string Message);
+        public static Logger CreateFileLogger(string FileName)
+        {
+            return new TextFileLogger(FileName);
+        }
 
+        public abstract void Log(string Message);
 
         public void LogInformation(string Message)
         {
@@ -25,5 +29,7 @@ namespace TestConsole.Loggers
         {
             Log(string.Format("{0:s}[error]:{1}", DateTime.Now, Message));
         }
+
+        public virtual void Flush() { }
     }
 }

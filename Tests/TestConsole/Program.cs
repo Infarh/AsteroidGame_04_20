@@ -8,13 +8,15 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            //Logger log = new Logger();
+            Logger log = new TextFileLogger("text.log");
 
-            //log.LogInformation("Message1");
-            //log.LogWarning("Info message");
-            //log.LogError("Error message");
+            log.LogInformation("Message1");
+            log.LogWarning("Info message");
+            log.LogError("Error message");
 
-            Console.ReadLine();
+            log.Flush();
+
+            //Console.ReadLine();
         }
     }
 }
