@@ -46,9 +46,17 @@
   <Class Name="TestConsole.Student">
     <Position X="12" Y="1" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAEIAAAAAAAAAAAAAQABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAEIAAAAAAAAAAAAAQABAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Student.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
+  <Interface Name="TestConsole.ILogger">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
