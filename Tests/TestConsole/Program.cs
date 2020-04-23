@@ -12,10 +12,16 @@ namespace TestConsole
             //Logger log = new TextFileLogger("text.log");
             //Logger log = new ConsoleLogger();
             //Logger log = new DebugOutputLogger();
-            Logger log = new TraceLogger();
+            //Logger log = new TraceLogger();
 
             Trace.Listeners.Add(new TextWriterTraceListener("logger.log"));
             Trace.Listeners.Add(new XmlWriterTraceListener("logger.log.xml"));
+
+            CombineLogger log = new CombineLogger();
+            log.Add(new ConsoleLogger());
+            log.Add(new DebugOutputLogger());
+            log.Add(new TraceLogger());
+            log.Add(new TextFileLogger("new_log.log"));
 
             log.LogInformation("Message1");
             log.LogWarning("Info message");
@@ -23,7 +29,7 @@ namespace TestConsole
 
             log.Flush();
 
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }
