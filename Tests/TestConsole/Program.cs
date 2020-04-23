@@ -1,63 +1,109 @@
 ﻿using System;
 using System.Globalization;
+using TestConsole.Loggers;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace TestConsole
 {
     class Program
     {
-        static void Main(string[] args) // Ctrl+K,D
+        static void Main(string[] args)
         {
-            //Player player1 = new Player();
-            //player1.Name = "Иванов";
-            //player1.Birthday = new DateTime(1974, 12, 21, 0, 0, 0);
+            //Logger log = new TextFileLogger("text.log");
+            //Logger log = new ConsoleLogger();
+            //Logger log = new DebugOutputLogger();
+            //Logger log = new TraceLogger();
 
-            //Player player1 = new Player("Empty", new DateTime(1987, 12, 12));
+            Trace.Listeners.Add(new TextWriterTraceListener("logger.log"));
+            Trace.Listeners.Add(new XmlWriterTraceListener("logger.log.xml"));
 
-            //Console.Write("Введите фамилию >");
-            //player1.Name = Console.ReadLine();
+            CombineLogger combine_log = new CombineLogger();
+            combine_log.Add(new ConsoleLogger());
+            combine_log.Add(new DebugOutputLogger());
+            combine_log.Add(new TraceLogger());
+            combine_log.Add(new TextFileLogger("new_log.log"));
 
-            //Console.WriteLine(player1.Name);
+            combine_log.LogInformation("Message1");
+            combine_log.LogWarning("Info message");
+            combine_log.LogError("Error message");
 
-            //Vector2D v1 = new Vector2D(5, 7);
-            //Vector2D v2 = new Vector2D(-7, 2);
+            Student student = new Student { Name = "Иванов" };
 
-            //Vector2D v3 = v1 + v2;
+            ILogger log = combine_log;
+            //ComputeLongDataValue(100, student);
 
-            //Vector2D v4 = v3 + 3.14159265358979;
+            //Console.WriteLine("Программа завершена!");
+            ////Console.ReadLine();
 
-            //CultureInfo ru = new CultureInfo("ru-ru");
-            //CultureInfo en_us = new CultureInfo("en-us");
-            //CultureInfo invariant = CultureInfo.InvariantCulture;
-            //CultureInfo current = CultureInfo.CurrentCulture;
-            //CultureInfo current_ui = CultureInfo.CurrentUICulture;
+            //using (var file_logger = new TextFileLogger("another.log"))
+            //{
+            //    file_logger.LogInformation("123");
+            //}
 
-            //double pi = double.Parse("3.1415", invariant); //Convert.ToDouble("3,1415");
-            ////int j = Convert.ToInt32(3.14);
-            //int i = (int)pi;
+            try
+            {
+                ComputeLongDataValue(600, log);
+            }
+            catch (ArgumentNullException error)
+            {
+                combine_log.LogError(error.ToString());
+                combine_log.LogError(error.Message);
+                throw new ComputeExceptionException("Ошибка в значении входного параметра", error);
 
-            //Console.WriteLine(pi);
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("Число итераций слишком велико!");
+                throw;
+            }
+            catch (Exception error)
+            {
+                combine_log.LogError(error.ToString());
+                combine_log.LogError(error.Message);
+                throw new ComputeExceptionException("Произошла неизвестная ошибка при вычислении", error);
+            }
 
-            //double length = v4;
 
-            Printer printer = new Printer();
-            PrefixPrinter prefix_printer = new PrefixPrinter();
-            prefix_printer.Prefix = "!!!!!!!-------!!!!!!!";
+            combine_log.Flush();
+        }
 
-            prefix_printer.Print("QWE");
+        private static double ComputeLongDataValue(int Count, ILogger Log)
+        {
+            if(Log is null)
+                //throw new ArgumentNullException("Log");
+                throw new ArgumentNullException(nameof(Log));
 
-            printer.Print("Hello World!");
-            prefix_printer.PrintData(3.14);
+            if(Count <= 0)
+                throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число итераций обязано быть больше нуля!");
 
-            printer.Print("123");
+            var result = 0;
+            for (var i = 0; i < Count; i++)
+            {
+                result++;
+                Log.Log($"Вычисление итерации {i}");
+                System.Threading.Thread.Sleep(10);
 
-            printer = prefix_printer;
+                if(i > 500)
+                    throw new InvalidOperationException("Число итераций оказалось слишком большим!",
+                        new ArgumentException($"Число итераций было указано больше 500 и равно {Count}", nameof(Count)));
+            }
 
-            Printer printer1 = new PrefixPrinter();
+            return result;
+        }
+    }
 
-            printer.Print("345");
-            printer1.Print("678");
+    [Serializable]
+    public class ComputeExceptionException : ApplicationException
+    {
+        public ComputeExceptionException() { }
+        public ComputeExceptionException(string message) : base(message) { }
+        public ComputeExceptionException(string message, Exception inner) : base(message, inner) { }
 
-            Console.ReadLine();
+        protected ComputeExceptionException(
+            SerializationInfo info,
+            StreamingContext context) : base(info, context)
+        {
         }
     }
 }

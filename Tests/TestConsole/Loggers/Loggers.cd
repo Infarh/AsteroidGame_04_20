@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TestConsole.Loggers.Logger">
+    <Position X="2.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgAAAAAAAAAAAAAAAAAAAAAAIAgABAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Loggers\Logger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestConsole.Loggers.CombineLogger" Collapsed="true">
+    <Position X="0.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAAIAAA=</HashCode>
+      <FileName>Loggers\CombineLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestConsole.Loggers.ConsoleLogger" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Loggers\ConsoleLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestConsole.Loggers.DebugOutputLogger" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Loggers\DebugOutputLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestConsole.Loggers.TextFileLogger" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABCAAAAAAAAAAAgAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Loggers\TextFileLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestConsole.Loggers.TraceLogger" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Loggers\TraceLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestConsole.Student">
+    <Position X="12" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEIAAAAAAAAAAAAAQABAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Student.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TestConsole.ILogger">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
