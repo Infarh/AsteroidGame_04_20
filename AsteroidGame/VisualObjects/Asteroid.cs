@@ -32,10 +32,5 @@ namespace AsteroidGame.VisualObjects
             : base(Position, Direction, new Size(ImageSize, ImageSize), Properties.Resources.Ast)
         {
         }
-
-        public override void Draw(Graphics g)
-        {
-
-        }
     }
 }
