@@ -11,6 +11,10 @@ namespace TestConsole
     {
         protected readonly List<TItem> _Items = new List<TItem>();
 
+        //private Func<int, double, string, bool>
+        private Action<TItem> _AddObservers;
+
+
         public int Count => _Items.Count;
 
         public virtual TItem this[int index]
@@ -26,10 +30,18 @@ namespace TestConsole
             }
         }
 
+        public void SubscribeToAdd(Action<TItem> Observer)
+        {
+            _AddObservers = Observer;
+        }
+
         public virtual void Add(TItem item)
         {
             if(_Items.Contains(item)) return;
             _Items.Add(item);
+
+            if (_AddObservers != null)
+                _AddObservers(item);
         }
 
         public virtual bool Remove(TItem item)
