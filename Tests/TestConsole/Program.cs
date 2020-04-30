@@ -1,109 +1,110 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using TestConsole.Loggers;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using TestConsole.Service;
 
 namespace TestConsole
 {
+    internal delegate int StringProcessor(string str);
+
+    internal delegate void StudentProcessor(Student student);
+
     class Program
     {
+        private static void OnStudentRemoved(Student student)
+        {
+            Console.WriteLine("Студент {0} был отчислен!", student.Surname);
+        }
+
         static void Main(string[] args)
         {
-            //Logger log = new TextFileLogger("text.log");
-            //Logger log = new ConsoleLogger();
-            //Logger log = new DebugOutputLogger();
-            //Logger log = new TraceLogger();
+            var decanat = new Decanat();
+            decanat.SubscribeToAdd(RateStudent);
+            decanat.SubscribeToAdd(PrintStudent);
 
-            Trace.Listeners.Add(new TextWriterTraceListener("logger.log"));
-            Trace.Listeners.Add(new XmlWriterTraceListener("logger.log.xml"));
+            decanat.ItemRemoved += OnStudentRemoved;
 
-            CombineLogger combine_log = new CombineLogger();
-            combine_log.Add(new ConsoleLogger());
-            combine_log.Add(new DebugOutputLogger());
-            combine_log.Add(new TraceLogger());
-            combine_log.Add(new TextFileLogger("new_log.log"));
+            var rnd = new Random();
 
-            combine_log.LogInformation("Message1");
-            combine_log.LogWarning("Info message");
-            combine_log.LogError("Error message");
+            for (var i = 1; i <= 100; i++)
+                decanat.Add(new Student
+                {
+                    Name = $"Name {i}",
+                    Surname = $"Surname {i}",
+                    Patronimyc = $"Patronymic {i}",
+                    //Ratings = rnd.GetValues(rnd.Next(20, 30), 3, 6)
+                });
 
-            Student student = new Student { Name = "Иванов" };
-
-            ILogger log = combine_log;
-            //ComputeLongDataValue(100, student);
-
-            //Console.WriteLine("Программа завершена!");
-            ////Console.ReadLine();
-
-            //using (var file_logger = new TextFileLogger("another.log"))
+            //foreach (var student in decanat)
             //{
-            //    file_logger.LogInformation("123");
+            //    Console.WriteLine(student.Name);
             //}
 
-            try
-            {
-                ComputeLongDataValue(600, log);
-            }
-            catch (ArgumentNullException error)
-            {
-                combine_log.LogError(error.ToString());
-                combine_log.LogError(error.Message);
-                throw new ComputeExceptionException("Ошибка в значении входного параметра", error);
+            var student_to_remove = decanat[0];
 
-            }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("Число итераций слишком велико!");
-                throw;
-            }
-            catch (Exception error)
-            {
-                combine_log.LogError(error.ToString());
-                combine_log.LogError(error.Message);
-                throw new ComputeExceptionException("Произошла неизвестная ошибка при вычислении", error);
-            }
+            decanat.Remove(student_to_remove);
 
 
-            combine_log.Flush();
+            var random_student = new Student { Surname = rnd.GetValue<string>("Иванов", "Петров", "Сидоров") };
+
+            //var random_rating = rnd.GetValue<int>(2, 3, 4, 5);
+
+            decanat.SaveToFile("decanat.csv");
+
+            var decanat2 = new Decanat();
+            decanat2.LoadFromFile("decanat.csv");
+
+            StringProcessor str_rocessor = new StringProcessor(GetStringLength);
+
+            var length = str_rocessor("Hello World");
+
+            //StudentProcessor process = new StudentProcessor(PrintStudent);
+
+            //process(random_student);
+
+            //process = RateStudent;
+
+            //process(random_student);
+
+            //process = PrintStudent;
+            //process(random_student);
+
+            //ProcessStudents(decanat2, PrintStudent);
+            ProcessStudents(decanat2, RateStudent);
+            ProcessStudents(decanat2, PrintStudent);
+
+            var decanat3 = new Decanat();
+
+            ProcessStudents(decanat2, decanat3.Add);
+
+            Console.ReadLine();
         }
 
-        private static double ComputeLongDataValue(int Count, ILogger Log)
+        private static int GetStringLength(string str)
         {
-            if(Log is null)
-                //throw new ArgumentNullException("Log");
-                throw new ArgumentNullException(nameof(Log));
-
-            if(Count <= 0)
-                throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число итераций обязано быть больше нуля!");
-
-            var result = 0;
-            for (var i = 0; i < Count; i++)
-            {
-                result++;
-                Log.Log($"Вычисление итерации {i}");
-                System.Threading.Thread.Sleep(10);
-
-                if(i > 500)
-                    throw new InvalidOperationException("Число итераций оказалось слишком большим!",
-                        new ArgumentException($"Число итераций было указано больше 500 и равно {Count}", nameof(Count)));
-            }
-
-            return result;
+            return str.Length;
         }
-    }
 
-    [Serializable]
-    public class ComputeExceptionException : ApplicationException
-    {
-        public ComputeExceptionException() { }
-        public ComputeExceptionException(string message) : base(message) { }
-        public ComputeExceptionException(string message, Exception inner) : base(message, inner) { }
-
-        protected ComputeExceptionException(
-            SerializationInfo info,
-            StreamingContext context) : base(info, context)
+        private static void PrintStudent(Student student)
         {
+            Console.WriteLine("[{0}]{1} {2} {3} - {4}", 
+                student.Id, 
+                student.Surname, student.Name, student.Patronimyc, student.AverageRating);
+        }
+
+        private static void RateStudent(Student student)
+        {
+            var rnd = new Random();
+            student.Ratings.AddRange(rnd.GetValues(5, 2, 6));
+        }
+
+        private static void ProcessStudents(IEnumerable<Student> students, StudentProcessor Processor)
+        {
+            foreach (var student in students)
+                Processor(student);
         }
     }
 }
