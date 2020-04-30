@@ -14,6 +14,7 @@ namespace TestConsole
         //private Func<int, double, string, bool>
         private Action<TItem> _AddObservers;
 
+        public event Action<TItem> ItemRemoved;
 
         public int Count => _Items.Count;
 
@@ -32,7 +33,7 @@ namespace TestConsole
 
         public void SubscribeToAdd(Action<TItem> Observer)
         {
-            _AddObservers = Observer;
+            _AddObservers += Observer;
         }
 
         public virtual void Add(TItem item)
@@ -46,7 +47,18 @@ namespace TestConsole
 
         public virtual bool Remove(TItem item)
         {
-            return _Items.Remove(item);
+            var result = _Items.Remove(item);
+
+            if (result)
+            {
+                //var handlers = ItemRemoved;
+                //if (handlers != null)
+                //    handlers(item);
+
+                ItemRemoved?.Invoke(item);
+            }
+
+            return result;
         }
 
         public virtual bool IsContains(TItem item)
