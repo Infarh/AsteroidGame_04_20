@@ -19,6 +19,7 @@ namespace TestConsole.Service
         }
 
         public static TValue GetValue<TValue>(this Random rnd, params TValue[] Values)
+            //where TValue : class, IEntity
         {
             return Values[rnd.Next(0, Values.Length)];
         }

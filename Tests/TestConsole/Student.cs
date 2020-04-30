@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace TestConsole
 {
-    internal class Student : IComparable<Student>, IEquatable<Student>, IEquatable<string>
+    interface IEntity
+    {
+        int Id { get; set; }
+    }
+
+    internal class Student : IComparable<Student>, IEquatable<Student>, IEquatable<string>, IEntity
     {
         public int Id { get; set; }
 
