@@ -9,7 +9,7 @@ namespace TestConsole
 {
     internal abstract class Storage<TItem> : IEnumerable<TItem>
     {
-        private readonly List<TItem> _Items = new List<TItem>();
+        protected readonly List<TItem> _Items = new List<TItem>();
 
         public int Count => _Items.Count;
 
@@ -45,6 +45,13 @@ namespace TestConsole
         public virtual void Clear()
         {
             _Items.Clear();
+        }
+
+        public abstract void SaveToFile(string FileName);
+
+        public virtual void LoadFromFile(string FileName)
+        {
+            Clear();
         }
 
         public IEnumerator<TItem> GetEnumerator()

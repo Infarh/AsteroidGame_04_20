@@ -38,6 +38,11 @@ namespace TestConsole
 
             var random_rating = rnd.GetValue<int>(2, 3, 4, 5);
 
+            decanat.SaveToFile("decanat.csv");
+
+            var decanat2 = new Decanat();
+            decanat2.LoadFromFile("decanat.csv");
+
             Console.ReadLine();
         }
     }
