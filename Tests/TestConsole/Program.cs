@@ -7,6 +7,8 @@ using TestConsole.Service;
 
 namespace TestConsole
 {
+    internal delegate int StringProcessor(string str);
+
     class Program
     {
         static void Main(string[] args)
@@ -43,7 +45,16 @@ namespace TestConsole
             var decanat2 = new Decanat();
             decanat2.LoadFromFile("decanat.csv");
 
+            StringProcessor str_rocessor = new StringProcessor(GetStringLength);
+
+            var length = str_rocessor("Hello World");
+
             Console.ReadLine();
+        }
+
+        private static int GetStringLength(string str)
+        {
+            return str.Length;
         }
     }
 }
