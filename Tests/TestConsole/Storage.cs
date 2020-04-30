@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestConsole
 {
-    internal abstract class Storage<TItem>
+    internal abstract class Storage<TItem> : IEnumerable<TItem>
     {
         private readonly List<TItem> _Items = new List<TItem>();
 
@@ -44,6 +45,16 @@ namespace TestConsole
         public virtual void Clear()
         {
             _Items.Clear();
+        }
+
+        public IEnumerator<TItem> GetEnumerator()
+        {
+            return _Items.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

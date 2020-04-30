@@ -24,6 +24,11 @@ namespace TestConsole
                     Ratings = rnd.GetValues(rnd.Next(20, 30), 3, 6)
                 });
 
+            foreach (var student in decanat)
+            {
+                Console.WriteLine(student.Name);
+            }
+
             var student_to_remove = decanat[0];
 
             decanat.Remove(student_to_remove);
