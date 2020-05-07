@@ -27,5 +27,10 @@ namespace TextEditorWPF
             //Width = 800;
             //Height = 600;
         }
+
+        private void OnCloseMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
