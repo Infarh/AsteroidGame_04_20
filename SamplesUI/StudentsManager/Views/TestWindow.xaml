@@ -78,5 +78,40 @@
     <Grid>
         <!--<Button Content="Button" HorizontalAlignment="Left" Margin="313,143,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource ButtonStyle1}"/>-->
 
+        <Ellipse Fill="Red" Stroke="DarkBlue" 
+                 StrokeThickness="4" 
+                 HorizontalAlignment="Left" 
+                 Width="130" 
+                 Margin="343,184,0,195" RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+
+        <Slider Margin="30,0,30,0" VerticalAlignment="Top"/>
+        <Slider Orientation="Vertical" Margin="0,30,0,30" HorizontalAlignment="Left"/>
+        <Slider Orientation="Vertical" 
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Height="100"
+                Margin="0,0,0,30"/>
+
+        <TextBox VerticalAlignment="Top" 
+                 HorizontalAlignment="Right"
+                 Width="80"
+                 Margin="0,25,30,0"/>
+        <TextBox VerticalAlignment="Bottom"
+                 HorizontalAlignment="Left"
+                 Width="80"
+                 Margin="25,0,0,30"/>
+        <TextBox VerticalAlignment="Bottom"
+                 HorizontalAlignment="Right"
+                 Width="80"
+                 Margin="0,0,25,30"/>
     </Grid>
 </Window>
