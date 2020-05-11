@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentsManager"
+        xmlns:vm="clr-namespace:StudentsManager.ViewModels"
         xmlns:models="clr-namespace:StudentsManager.Models"
         xmlns:services="clr-namespace:StudentsManager.Services"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{Binding Title}"
+        Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <services:StudentsManager x:Key="StudentsManager"/>
     </Window.Resources>
@@ -22,14 +27,14 @@
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Width="150">
-                <TextBlock Text="Готов!"/>
+                <TextBlock Text="{Binding Status}"/>
             </StatusBarItem>
             <StatusBarItem Margin="20,0,0,0">
                 <ProgressBar Width="120" Height="10" Value="40"/>
             </StatusBarItem>
         </StatusBar>
         <TabControl>
-            <TabItem Header="Группы">
+            <TabItem Header="Группы" DataContext="{Binding StudenGroupsModel}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
@@ -91,7 +96,7 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Студенты">
+            <TabItem Header="Студенты" DataContext="{Binding StudentsModel}">
 
             </TabItem>
         </TabControl>
