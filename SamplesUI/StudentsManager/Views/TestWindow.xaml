@@ -80,15 +80,19 @@
 
         <Ellipse Fill="Red" Stroke="DarkBlue" 
                  StrokeThickness="4" 
-                 HorizontalAlignment="Left" 
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
                  Width="130" 
-                 Margin="343,184,0,195" RenderTransformOrigin="0.5,0.5">
+                 Height="40"
+                 Margin="30,30" 
+                 RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform Angle="0"/>
-                    <TranslateTransform/>
+                    <RotateTransform Angle="{Binding Value, ElementName=AngleValue}"/>
+                    <TranslateTransform X="{Binding Value, ElementName=HorizontalValue}"
+                                        Y="{Binding Value, ElementName=VerticalValue}"/>
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
