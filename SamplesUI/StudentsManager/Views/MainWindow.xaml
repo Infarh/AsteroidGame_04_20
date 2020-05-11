@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentsManager"
+        xmlns:models="clr-namespace:StudentsManager.Models"
         xmlns:services="clr-namespace:StudentsManager.Services"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -36,10 +37,57 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Группы">
                         <ListBox ItemsSource="{Binding Groups, Source={StaticResource StudentsManager}}"
-                                 DisplayMemberPath="Name"/>
+                                 Name="GroupsList">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:StudentsGroup">
+                                    <Border BorderThickness="3" BorderBrush="Blue" Padding="5" CornerRadius="3">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Id, StringFormat=[{0}]}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </GroupBox>
                     <GroupBox Header="Студенты выбранной группы" Grid.Column="1">
-                        <ListBox></ListBox>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <ListBox ItemsSource="{Binding SelectedValue.Students, ElementName=GroupsList}"
+                                     Name="StudentsList">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="models:Student">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Surname}" Margin="0,0,3,0"/>
+                                            <TextBlock Text="{Binding Name}" Margin="0,0,3,0"/>
+                                            <TextBlock Text="{Binding Patronymic}" Margin="0,0,3,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Grid Grid.Row="1" DataContext="{Binding SelectedValue, ElementName=StudentsList}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Фамилия:" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Имя:" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество:" HorizontalAlignment="Right"/>
+
+                                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Surname}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Name}"/>
+                                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
+                            </Grid>
+                        </Grid>
                     </GroupBox>
                 </Grid>
             </TabItem>
