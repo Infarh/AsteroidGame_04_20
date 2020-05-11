@@ -76,7 +76,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="313,143,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource ButtonStyle1}"/>
+        <!--<Button Content="Button" HorizontalAlignment="Left" Margin="313,143,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource ButtonStyle1}"/>-->
 
     </Grid>
 </Window>
