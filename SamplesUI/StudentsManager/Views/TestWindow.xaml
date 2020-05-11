@@ -93,25 +93,34 @@
             </Ellipse.RenderTransform>
         </Ellipse>
 
-        <Slider Margin="30,0,30,0" VerticalAlignment="Top"/>
-        <Slider Orientation="Vertical" Margin="0,30,0,30" HorizontalAlignment="Left"/>
-        <Slider Orientation="Vertical" 
+        <Slider Name="HorizontalValue" Margin="30,0,30,0" VerticalAlignment="Top" 
+                Maximum="800"
+                ToolTip="{Binding Value, RelativeSource={RelativeSource Self}}"/>
+        <Slider Name="VerticalValue" Orientation="Vertical" Margin="0,30,0,30" HorizontalAlignment="Left"
+                Maximum="600"/>
+        <Slider Name="AngleValue" 
+                Orientation="Vertical" 
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Height="100"
-                Margin="0,0,0,30"/>
+                Margin="0,0,0,30"
+                Minimum="-180"
+                Maximum="180"/>
 
         <TextBox VerticalAlignment="Top" 
                  HorizontalAlignment="Right"
                  Width="80"
-                 Margin="0,25,30,0"/>
+                 Margin="0,25,30,0"
+                 Text="{Binding Value, ElementName=HorizontalValue, StringFormat={}{0:0}}"/>
         <TextBox VerticalAlignment="Bottom"
                  HorizontalAlignment="Left"
                  Width="80"
-                 Margin="25,0,0,30"/>
+                 Margin="25,0,0,30"
+                 Text="{Binding Value, ElementName=VerticalValue, StringFormat=0}"/>
         <TextBox VerticalAlignment="Bottom"
                  HorizontalAlignment="Right"
                  Width="80"
-                 Margin="0,0,25,30"/>
+                 Margin="0,0,25,30"
+                 Text="{Binding Value, ElementName=AngleValue, StringFormat='{}{0:f2}°'}"/>
     </Grid>
 </Window>
