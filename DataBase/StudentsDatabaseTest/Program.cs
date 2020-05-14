@@ -61,8 +61,12 @@ namespace StudentsDatabaseTest
                 db.Database.Log = str => Console.WriteLine("EF>> {0}", str);
 
                 var students_group_id_7 = db.Students
-                   .Include(student => student.Group)
+                   //.Include(student => student.Group)
                    .Where(student => student.Group.Id == 7).ToArray();
+
+                Console.ReadLine();
+
+                Console.WriteLine(students_group_id_7[0].Group.Name);
             }
 
             Console.ReadLine();

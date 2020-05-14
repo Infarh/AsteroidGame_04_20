@@ -8,7 +8,7 @@ namespace StudentsDatabaseTest.Data.Entityes
 
         public string Name { get; set; }
 
-        public ICollection<Student> Students { get; set; } = new List<Student>();
+        public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 
         public override string ToString() => $"[{Id}]{Name}";
     }

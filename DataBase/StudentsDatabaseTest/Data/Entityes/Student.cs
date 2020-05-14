@@ -23,8 +23,8 @@ namespace StudentsDatabaseTest.Data.Entityes
         //public int GroupId { get; set; }
 
         //[ForeignKey("Group_ID")]
-        public StudentsGroup Group { get; set; }
+        public virtual StudentsGroup Group { get; set; }
 
-        public ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }
