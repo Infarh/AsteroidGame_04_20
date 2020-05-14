@@ -35,6 +35,7 @@ namespace AdoNetTest
             //ExecuteNonQuery(connection_string);
             //ExecuteScalar(connection_string);
             //ExecuteReader(connection_string);
+            ParametricQuery(connection_string);
 
             Console.ReadLine();
         }
@@ -108,6 +109,28 @@ CREATE TABLE [dbo].[Player]
                             Console.WriteLine("id:{0}\tname:{1}\temail:{2}\tphone:{3}", id, name, email, phone);
                         }
 
+            }
+        }
+
+        private const string __SqlSelectWithFilter = @"SELECT COUNT(*) FROM [dbo].[Player] WHERE {0}";
+
+        private static void ParametricQuery(string ConnectionString)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                var select_command = new SqlCommand(
+                    string.Format(__SqlSelectWithFilter, "Birthday=@Birthday"),
+                    connection);
+
+                var birthday = new SqlParameter("@Birthday", SqlDbType.NVarChar, -1);
+
+                select_command.Parameters.Add(birthday);
+
+                birthday.Value = "18.10.2001";
+
+                var count = (int) select_command.ExecuteScalar();
             }
         }
     }
