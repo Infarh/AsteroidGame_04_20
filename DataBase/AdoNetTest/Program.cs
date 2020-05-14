@@ -31,7 +31,31 @@ namespace AdoNetTest
 
             var connection_string = ConfigurationManager.ConnectionStrings[connection_string_name].ConnectionString;
 
+            ExecuteNonQuery(connection_string);
+
             Console.ReadLine();
+        }
+
+        private const string __SqlCreateTablePlayer = @"
+CREATE TABLE [dbo].[Player] 
+(
+    [Id] INT IDENTITY(1, 1) NOT NULL,
+    [Name] NVARCHAR(MAX) COLLATE Cyrillic_General_CI_AS NOT NULL,
+    [Email]    NVARCHAR(100) NULL,
+    [Phone]    NVARCHAR(MAX) NULL,
+    [Birthday] NVARCHAR(MAX) NULL,
+    CONSTRAINT[PK_dbo.People] PRIMARY KEY CLUSTERED([Id] ASC)
+);";
+
+        private static void ExecuteNonQuery(string ConnectionString)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                var create_table_commend = new SqlCommand(__SqlCreateTablePlayer, connection);
+                create_table_commend.ExecuteNonQuery();
+            }
         }
     }
 }
