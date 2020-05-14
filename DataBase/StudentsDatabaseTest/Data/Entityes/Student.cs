@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,10 @@ namespace StudentsDatabaseTest.Data.Entityes
 
         public string Patronymic { get; set; }
 
+        //[Column("Group_ID")]
+        //public int GroupId { get; set; }
+
+        //[ForeignKey("Group_ID")]
         public StudentsGroup Group { get; set; }
 
         public ICollection<Course> Courses { get; set; }
