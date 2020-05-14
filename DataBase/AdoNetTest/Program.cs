@@ -35,7 +35,8 @@ namespace AdoNetTest
             //ExecuteNonQuery(connection_string);
             //ExecuteScalar(connection_string);
             //ExecuteReader(connection_string);
-            ParametricQuery(connection_string);
+            //ParametricQuery(connection_string);
+            DataAdapterTest(connection_string);
 
             Console.ReadLine();
         }
@@ -131,6 +132,94 @@ CREATE TABLE [dbo].[Player]
                 birthday.Value = "18.10.2001";
 
                 var count = (int) select_command.ExecuteScalar();
+            }
+        }
+
+        private static void DataAdapterTest(string ConnectionString)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                //connection.Open();
+
+                var adapter = new SqlDataAdapter();
+                adapter.SelectCommand = new SqlCommand("SELECT * FROM Player", connection);
+
+                var table = new DataTable();
+
+                adapter.Fill(table);
+            }
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var adapter = new SqlDataAdapter("SELECT * FROM Player; SELECT * FROM Games", connection);
+
+                var data_set = new DataSet();
+                adapter.Fill(data_set);
+
+                var players = data_set.Tables[0];
+                var gamse = data_set.Tables[1];
+            }
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                //connection.Open();
+
+                var adapter = new SqlDataAdapter("SELECT * FROM Player", connection);
+
+                var insert_command = new SqlCommand(@"INSERT INTO Player (Name,Birthday,Email,Phone) VALUES (@Name,@Birthday,@Email,@Phone); SET @ID=@@IDENTITY", connection)
+                {
+                    Parameters =
+                    {
+                        { "@Name", SqlDbType.NVarChar, -1, "Name" },
+                        { "@Birthday", SqlDbType.NVarChar, -1, "Birthday" },
+                        { "@Email", SqlDbType.NVarChar, 100, "Email" },
+                        { "@Phone", SqlDbType.NVarChar, -1, "Phone" },
+                        { "@ID", SqlDbType.Int, 0, "ID" },
+                    }
+                };
+                insert_command.Parameters["@ID"].Direction = ParameterDirection.Output;
+
+                adapter.InsertCommand = insert_command;
+
+                adapter.UpdateCommand = new SqlCommand(@"UPDATE Player SET Name=@Name,Birthday=@Birthday WHERE ID=@ID", connection)
+                {
+                    Parameters =
+                    {
+                        { "@Name", SqlDbType.NVarChar, -1, "Name" },
+                        { "@Birthday", SqlDbType.NVarChar, -1, "Birthday" },
+                        { "@ID", SqlDbType.Int, 0, "ID" },
+                    }
+                };
+                adapter.UpdateCommand.Parameters["@ID"].Direction = ParameterDirection.Output;
+
+                adapter.DeleteCommand = new SqlCommand(@"DELETE FROM Player WHERE ID=@ID", connection)
+                {
+                    Parameters =
+                    {
+                        { "@ID", SqlDbType.Int, 0, "ID" }
+                    }
+                };
+                adapter.DeleteCommand.Parameters["@ID"].Direction = ParameterDirection.Output;
+
+                var data_set = new DataSet();
+                adapter.Fill(data_set);
+
+                var table = data_set.Tables[0];
+
+                var row = table.NewRow();
+                row["Name"] = "QWE ASD ZXC";
+                row["Birthday"] = "21.04.2012";
+                table.Rows.Add(row);
+
+                adapter.Update(data_set);
+
+                var adapter2 = new SqlDataAdapter("SELECT * FROM Player", connection);
+
+                var builder = new SqlCommandBuilder(adapter2);
+                adapter2.InsertCommand = builder.GetInsertCommand();
+                adapter2.UpdateCommand = builder.GetUpdateCommand();
+                adapter2.DeleteCommand = builder.GetDeleteCommand();
+
             }
         }
     }
