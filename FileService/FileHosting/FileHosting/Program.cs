@@ -39,6 +39,15 @@ namespace FileHosting
             //    s1 = (Student) binary_formatter.Deserialize(bin_file);
             //    s2 = (Student) xml_serializer.Deserialize(xml_file);
             //}
+
+            //var student = new Student();
+
+            //var student_type = student.GetType();
+            //var student_type2 = typeof(Student);
+
+            //var student_name = student_type.GetProperty("Name");
+
+            //student_name.SetValue(student, "Helo World!");
         }
     }
 
